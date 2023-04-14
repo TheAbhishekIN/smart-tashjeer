@@ -1,5 +1,15 @@
 <div>
-    <form>
+    <form wire:submit.prevent="save">
+        @if (session()->has('success'))
+        <div class="p-4 mb-4 text-sm text-green-800 rounded-lg bg-green-50 dark:bg-gray-800 dark:text-green-400" role="alert">
+            <span class="font-medium">Success!</span> {{ session('success') }}
+        </div>
+    @endif
+    @if (session()->has('error'))
+        <div class="p-4 mb-4 text-sm text-red-800 rounded-lg bg-red-50 dark:bg-gray-800 dark:text-red-400" role="alert">
+            <span class="font-medium">Error!</span> {{ session('error')}}
+        </div>
+    @endif
         <div class="grid gap-6 mb-6 md:grid-cols-2">
             <div>
                 <label for="title" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Title</label>
@@ -13,11 +23,48 @@
                 </select>
             </div>
         </div>
-        <div class="mb-6">
+        <div class="mb-6" wire:ignore>
             <label for="email" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Page Content</label>
-            <textarea wire:model="editor" id="editor" cols="30" rows="10"></textarea>
+            <textarea wire:model="editor" id="editor" cols="30" rows="10">{!! $content !!}</textarea>
         </div>
 
-        <button type="submit" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Submit</button>
+        <button type="submit" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
+            Submit<div wire:loading wire:target="save">
+                ting...
+            </div>
+        </button>
     </form>
+
+    <script src="https://cdn.ckeditor.com/ckeditor5/29.1.0/classic/ckeditor.js"></script>
+
+    <script>
+        ClassicEditor
+        .create( document.querySelector( '#editor' ), {
+            toolbar: {
+                items: [
+                    'heading',
+                    '|',
+                    'bold',
+                    'italic',
+                    'link',
+                    'bulletedList',
+                    'numberedList',
+                    'blockQuote',
+                    'undo',
+                    'redo'
+                ]
+            },
+            language: 'en',
+            removeButtons: 'image'
+        } )
+        .then(editor => {
+            editor.model.document.on('change:data', () => {
+                @this.set('content', editor.getData());
+            })
+        })
+        .catch( error => {
+            console.error( error );
+        } );
+
+    </script>
 </div>

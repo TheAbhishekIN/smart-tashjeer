@@ -57,8 +57,8 @@
                         {{$page['date'] ?? "-"}}
                     </td>
                     <td class="px-6 py-4">
-                        <x-link-button href="">View</x-link-button>
-                        <x-link-button class="text-white bg-blue-600 hover:bg-blue-700 focus:ring-4 focus:ring-blue-200 font-medium rounded-lg text-sm px-4 py-2 text-center dark:focus:ring-blue-900">Edit</x-link-button>
+                        {{-- <x-link-button href="">View</x-link-button> --}}
+                        <x-link-button href="{{route('pages.edit', $page['slug'])}}" class="text-white bg-blue-600 hover:bg-blue-700 focus:ring-4 focus:ring-blue-200 font-medium rounded-lg text-sm px-4 py-2 text-center dark:focus:ring-blue-900">Edit</x-link-button>
                     </td>
                 </tr>
             @empty

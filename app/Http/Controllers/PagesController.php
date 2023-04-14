@@ -45,14 +45,9 @@ class PagesController extends Controller
         ]);
     }
 
-    public function edit(Request $request)
+    public function edit($slug)
     {
-        $this->database->getReference('test/blogs/' . $request['title'])
-            ->update([
-                'content/' => $request['content']
-            ]);
-
-        return response()->json('blog has been edited');
+        return view('pages.edit', compact('slug'));
     }
 
     public function delete(Request $request)

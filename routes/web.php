@@ -26,6 +26,12 @@ Route::middleware([
                 return view('dashboard');
             })->name('dashboard');
 
+            //Pages routes
             Route::get('pages', [\App\Http\Controllers\PagesController::class, 'index'])->name('pages.index');
             Route::get('pages/create', [\App\Http\Controllers\PagesController::class, 'create'])->name('pages.create');
+            Route::get('pages/{slug}/edit', [\App\Http\Controllers\PagesController::class, 'edit'])->name('pages.edit');
+
+            //posts routes
+            Route::get('posts', [\App\Http\Controllers\PostsController::class, 'index'])->name('posts.index');
+            Route::get('posts/{id}', [\App\Http\Controllers\PostsController::class, 'show'])->name('posts.view');
     });
