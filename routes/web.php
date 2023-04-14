@@ -18,11 +18,14 @@ Route::get('/', function () {
 });
 
 Route::middleware([
-    'auth:sanctum',
-    config('jetstream.auth_session'),
-    'verified'
-])->group(function () {
-    Route::get('/dashboard', function () {
-        return view('dashboard');
-    })->name('dashboard');
-});
+        'auth:sanctum',
+        config('jetstream.auth_session'),
+        'verified'
+    ])->group(function () {
+            Route::get('/dashboard', function () {
+                return view('dashboard');
+            })->name('dashboard');
+
+            Route::get('pages', [\App\Http\Controllers\PagesController::class, 'index'])->name('pages.index');
+            Route::get('pages/create', [\App\Http\Controllers\PagesController::class, 'create'])->name('pages.create');
+    });

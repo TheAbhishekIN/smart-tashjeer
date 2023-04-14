@@ -13,9 +13,11 @@
 
         <!-- Scripts -->
         @vite(['resources/css/app.css', 'resources/js/app.js'])
+        {{-- <script src="https://cdn.ckeditor.com/ckeditor5/37.0.1/classic/ckeditor.js"></script> --}}
 
         <!-- Styles -->
         @livewireStyles
+        @stack('head')
     </head>
     <body class="font-sans antialiased">
         <x-banner />
@@ -39,7 +41,7 @@
         </div>
 
         @stack('modals')
-
+        @stack('foooter')
         @livewireScripts
     </body>
 </html>
