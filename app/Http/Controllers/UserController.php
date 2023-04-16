@@ -21,6 +21,7 @@ class UserController extends Controller
 
             foreach($users as $key => $user){
                 $data[$key] = $user->data();
+                $data[$key]['created'] = $user->createTime();
             }
 
         } catch (\Throwable $th) {

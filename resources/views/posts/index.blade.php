@@ -14,8 +14,8 @@
 
 <div class="relative overflow-x-auto">
 
-<div class="relative overflow-x-auto shadow-md sm:rounded-lg">
-    <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
+<div class="relative overflow-x-auto shadow-md sm:rounded-lg p-8">
+    <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400" id="table">
         <thead class="text-sm text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
             <tr>
                 <th scope="col" class="px-6 py-3">
@@ -67,4 +67,22 @@
             </div>
         </div>
     </div>
+
+    @push('head')
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.25/css/jquery.dataTables.css">
+@endpush
+
+@push('foooter')
+<script src="https://code.jquery.com/jquery-3.6.4.min.js" integrity="sha256-oP6HI9z1XaZNBrJURtCoUT5SUnxFr8s3BzRl+cbzUq8=" crossorigin="anonymous"></script>
+    <script type="text/javascript" src="https://cdn.datatables.net/v/bs5/dt-1.11.3/datatables.min.js"></script>
+    <script>
+        $(document).ready(function() {
+                $('#table').DataTable({
+                dom: '<"flex flex-wrap items-center justify-between"<"my-2"l><"my-2"f><"my-2"B>>rtip',
+                buttons: ['copy', 'csv', 'excel', 'pdf', 'print']
+            });
+        });
+
+    </script>
+@endpush
 </x-app-layout>

@@ -10,6 +10,7 @@ class UserDetail extends Component
     public $slug;
     public $detail;
     public $confirming = 0;
+    public $contributions;
 
     public function mount($slug){
         $this->slug = $slug;
@@ -17,7 +18,14 @@ class UserDetail extends Component
 
             $database = \App\Services\FirebaseService::connect();
             $user = $database->collection('users')->document($slug)->snapshot()->data();
+            $contributions = $database->collection('posts')->where('userId', '=', $slug)->documents();
 
+            $posts = array();
+            foreach( $contributions as $key => $contri){
+                $posts[$key] = $contri->data();
+                $posts[$key]['id'] = $contri->id();
+            }
+            $this->contributions = $posts;
             $this->detail = $user;
         } catch (\Throwable $th) {
             return redirect()->route('users.index')->with('error', 'Something went wrong! please try again leter.');
@@ -45,7 +53,7 @@ class UserDetail extends Component
 
             $database = \App\Services\FirebaseService::connect();
             $user = $database->collection('users')->document($this->slug)->set(['isBlocked' => $status], ['merge' => true]);
-            // dd($user);
+
             if($user){
                 $user = $database->collection('users')->document($this->slug)->snapshot()->data();
                 $this->detail = $user;

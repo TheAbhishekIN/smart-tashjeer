@@ -90,7 +90,6 @@
                     </div>
                 </div>
             </header>
-
             <!-- Profile content -->
             <div class="flex flex-col xl:flex-row xl:space-x-16">
                 <aside class="xl:min-w-56 xl:w-56 space-y-3">
@@ -137,6 +136,45 @@
                         </div>
                     </div>
                 </aside>
+            </div>
+
+            <div class="space-y-5 mb-8 xl:mb-0 border-t-2 my-2">
+                <div>
+                    <h2 class="text-slate-800 font-semibold mb-2">Contribution History</h2>
+                    <div class="bg-white p-4 border border-slate-200 rounded-sm shadow-sm">
+                        <ul class="space-y-3">
+                            <!-- Item -->
+                            @foreach($contributions as $contri)
+                            <li class="sm:flex sm:items-center sm:justify-between">
+                                <div class="sm:grow flex items-center text-sm">
+                                    <!-- Icon -->
+                                    <div class="w-8 h-8 rounded-full shrink-0 bg-amber-500 my-2 mr-3">
+                                        <svg class="w-8 h-8 fill-current text-amber-50" viewBox="0 0 32 32">
+                                            <path d="M21 14a.75.75 0 0 1-.75-.75 1.5 1.5 0 0 0-1.5-1.5.75.75 0 1 1 0-1.5 1.5 1.5 0 0 0 1.5-1.5.75.75 0 1 1 1.5 0 1.5 1.5 0 0 0 1.5 1.5.75.75 0 1 1 0 1.5 1.5 1.5 0 0 0-1.5 1.5.75.75 0 0 1-.75.75Zm-7 10a1 1 0 0 1-1-1 4 4 0 0 0-4-4 1 1 0 0 1 0-2 4 4 0 0 0 4-4 1 1 0 0 1 2 0 4 4 0 0 0 4 4 1 1 0 0 1 0 2 4 4 0 0 0-4 4 1 1 0 0 1-1 1Z"></path>
+                                        </svg>
+                                    </div>
+                                    <!-- Position -->
+                                    <div>
+                                        <div class=" items-center whitespace-nowrap">
+                                            <div>Plant Name: {{$contri['plantName'] ?? "-"}}</div>
+                                            <div>Location: {{$contri['location'] ?? "-"}}</div>
+                                            <div>Count/AI Count: {{$contri['count'] ?? 0}}/{{$contri['aiCount'] ?? 0}}</div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- Tags -->
+                                <div class="sm:ml-2 mt-2 sm:mt-0">
+                                    <ul class="flex flex-wrap sm:justify-end -m-1">
+                                        <li class="m-1">
+                                            <x-link-button href="{{route('posts.view', $contri['id'])}}">View</x-link-button>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </li>
+                            @endforeach
+                        </ul>
+                    </div>
+                </div>
             </div>
         </div>
     </div>

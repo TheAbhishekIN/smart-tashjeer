@@ -40,7 +40,7 @@
         </div>
 
         @stack('modals')
-        @stack('foooter')
         @livewireScripts
+        @stack('foooter')
     </body>
 </html>
