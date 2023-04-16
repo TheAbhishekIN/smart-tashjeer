@@ -17,13 +17,19 @@ class PagesController extends Controller
 
     public function index()
     {
+        $data = array();
         try {
-            $pages = $this->database->collection('pages')->documents();
+            $pages = $this->database->collection('greenGuides')->documents();
+
+            foreach($pages as $key => $page){
+                $data[$key] = $page->data();
+                $data[$key]['id'] = $page->id();
+            }
         } catch (\Throwable $th) {
             return redirect()->back()->with('error', 'Something went wrong!');
         }
 
-        return view('pages.index', compact('pages'));
+        return view('pages.index', compact('data'));
     }
 
     public function create(Request $request)
@@ -34,8 +40,8 @@ class PagesController extends Controller
     public function store(Request $request)
     {
         $slug = Str::slug('Terms and conditions');
-        // dd($slug);
-        $pages = $this->database->collection('pages')->document($slug);
+
+        $pages = $this->database->collection('greenGuides')->document($slug);
         $pages->set([
             'title' => 'Terms and Conditions',
             'slug' => $slug,
@@ -50,12 +56,4 @@ class PagesController extends Controller
         return view('pages.edit', compact('slug'));
     }
 
-    public function delete(Request $request)
-    {
-        $this->database
-            ->getReference('test/blogs/' . $request['title'])
-            ->remove();
-
-        return response()->json('blog has been deleted');
-    }
 }

@@ -1,10 +1,9 @@
 <?php
 
-namespace App\Http\Livewire\Pages;
+namespace App\Http\Livewire\News;
 
 use Livewire\Component;
 use Str;
-
 class CreateEdit extends Component
 {
     public $title;
@@ -17,7 +16,7 @@ class CreateEdit extends Component
                 $this->slug = $slug;
 
                 $database = \App\Services\FirebaseService::connect();
-                $page = $database->collection('greenGuides')->document($slug)->snapshot();
+                $page = $database->collection('news')->document($slug)->snapshot();
 
                 $this->title = $page['title'] ?? "";
                 $this->published = $page['published'] ?? 1;
@@ -31,7 +30,7 @@ class CreateEdit extends Component
     }
     public function render()
     {
-        return view('livewire.pages.create-edit');
+        return view('livewire.news.create-edit');
     }
 
     public function save(){
@@ -51,18 +50,19 @@ class CreateEdit extends Component
                 ];
 
             // Get a document snapshot for a specific page
-            $pageRef = $database->collection('greenGuides')->document($slug)->snapshot();
+            $pageRef = $database->collection('news')->document($slug)->snapshot();
 
             // Check if the document snapshot exists
             if ($pageRef->exists()) {
-                $save = $database->collection('greenGuides')->document($slug)->set($pageData, ['merge' => true]);
-                if($save){ session()->flash('success', 'Green Guide successfully updated.'); }
+                $save = $database->collection('news')->document($slug)->set($pageData, ['merge' => true]);
+                if($save){ session()->flash('success', 'News successfully updated.'); }
             } else {
-                $save = $database->collection('greenGuides')->document($slug)->set($pageData);
-                if($save){ session()->flash('success', 'Green Guide successfully saved.'); }
+                $save = $database->collection('news')->document($slug)->set($pageData);
+                if($save){ session()->flash('success', 'News successfully saved.'); }
             }
         } catch (\Throwable $th) {
             session()->flash('error', 'Something went wrong! please try again.');
         }
     }
 }
+

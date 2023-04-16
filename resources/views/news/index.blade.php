@@ -2,9 +2,9 @@
     <x-slot name="header" >
         <div class="flex justify-between">
             <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-                {{ __('Green Guide') }}
+                {{ __('Mews') }}
             </h2>
-            <x-link-button href="{{route('pages.create')}}">Create Green Guide</x-link-button>
+            <x-link-button href="{{route('news.create')}}">Create News</x-link-button>
         </div>
 
     </x-slot>
@@ -18,7 +18,7 @@
         <thead class="text-md text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
             <tr>
                 <th scope="col" class="px-6 py-3">
-                    Page Title
+                    Title
                 </th>
                 <th scope="col" class="px-6 py-3">
                     Slug
@@ -58,7 +58,7 @@
                     </td>
                     <td class="px-6 py-4">
                         {{-- <x-link-button href="">View</x-link-button> --}}
-                        <x-link-button href="{{route('pages.edit', $page['id'])}}" class="text-white bg-blue-600 hover:bg-blue-700 focus:ring-4 focus:ring-blue-200 font-medium rounded-lg text-sm px-4 py-2 text-center dark:focus:ring-blue-900">Edit</x-link-button>
+                        <x-link-button href="{{route('news.edit', $page['id'])}}" class="text-white bg-blue-600 hover:bg-blue-700 focus:ring-4 focus:ring-blue-200 font-medium rounded-lg text-sm px-4 py-2 text-center dark:focus:ring-blue-900">Edit</x-link-button>
                     </td>
                 </tr>
             @empty
