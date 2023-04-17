@@ -7,7 +7,6 @@ use Str;
 class CreateEdit extends Component
 {
     public $title;
-    public $published = 0;
     public $content;
     public $slug;
     public function mount($slug = null){
@@ -19,7 +18,6 @@ class CreateEdit extends Component
                 $page = $database->collection('news')->document($slug)->snapshot();
 
                 $this->title = $page['title'] ?? "";
-                $this->published = $page['published'] ?? 1;
                 $this->content = $page['description'] ?? "";
             }
         } catch (\Throwable $th) {
@@ -44,7 +42,6 @@ class CreateEdit extends Component
             $pageData = [
                     'title' => $this->title,
                     'slug' => $slug,
-                    'published' => $this->published,
                     'date' => date('F jS Y \T H:i:s a'),
                     'description' => $this->content
                 ];

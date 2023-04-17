@@ -23,9 +23,9 @@
                 <th scope="col" class="px-6 py-3">
                     Slug
                 </th>
-                <th scope="col" class="px-6 py-3">
+                {{-- <th scope="col" class="px-6 py-3">
                     Published
-                </th>
+                </th> --}}
                 <th scope="col" class="px-6 py-3">
                     Created at
                 </th>
@@ -43,7 +43,7 @@
                     <td class="px-6 py-4">
                         {{$page['slug'] ?? "-"}}
                     </td>
-
+{{--
                     <td class="px-6 py-4">
                        @isset($page['published'])
                             @if($page['published'])
@@ -52,7 +52,7 @@
                                 <span class="bg-red-100 text-red-800 text-xs font-medium mr-2 px-2.5 py-0.5 rounded dark:bg-red-900 dark:text-red-300">False</span>
                             @endif
                         @endisset
-                    </td>
+                    </td> --}}
                     <td class="px-6 py-4">
                         {{$page['date'] ?? "-"}}
                     </td>

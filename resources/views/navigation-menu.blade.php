@@ -171,10 +171,11 @@
             <x-responsive-nav-link href="{{ route('users.index') }}" :active="request()->routeIs('users.*')">
                 {{ __('Users') }}
             </x-responsive-nav-link>
-            {{--
-            <x-responsive-nav-link href="{{ route('pages.index') }}" :active="request()->routeIs('pages.index')">
+            <x-responsive-nav-link href="{{ route('news.index') }}" :active="request()->routeIs('news.*')">
                 {{ __('News') }}
             </x-responsive-nav-link>
+
+            {{--
 
             <x-responsive-nav-link href="{{ route('pages.index') }}" :active="request()->routeIs('pages.index')">
                 {{ __('Notifications') }}
