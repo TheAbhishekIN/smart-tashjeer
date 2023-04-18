@@ -21,21 +21,28 @@
                         @if($confirming===0)
                                 @if(isset($post['isApproved']) && $post['isApproved'])
                                     <button wire:click="confirm(1)"
-                                        class="bg-green-800 text-white w-32 px-4 py-1 hover:bg-green-600 rounded border">
-
-                                        Approve?
-                                    </button>
-                                @else
-                                    <button wire:click="confirm(1)"
                                     class="bg-red-800 text-white w-32 px-4 py-1 hover:bg-red-600 rounded border">
 
                                     Block?
                                     </button>
+                                @else
+                                    <button wire:click="confirm(1)"
+                                    class="bg-green-800 text-white w-40 px-4 py-1 hover:bg-green-600 rounded border">
+                                    Approve?
+                                </button>
+
                                 @endif
 
                             @else
+                            <div wire:loading.remove wire:target="update">
                                 <button wire:click="update(1)"
-                                    class="bg-red-600 text-white w-40 px-4 py-1 hover:bg-red-600 rounded border">are you sure ?</button>
+                                    class="bg-red-600 text-white w-40 px-4 py-1 hover:bg-red-600 rounded border">
+                                        are you sure ?
+                                </button>
+                            </div>
+                            <div wire:loading wire:target="update">
+                                <x-spinner></x-spinner>
+                            </div>
                             @endif
                     </div>
                 </dd>

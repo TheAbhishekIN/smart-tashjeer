@@ -3,6 +3,8 @@
 namespace App\Http\Livewire\Posts;
 
 use Livewire\Component;
+use Kreait\Firebase\Messaging\CloudMessage;
+use Kreait\Firebase\Messaging\Notification;
 
 class View extends Component
 {
@@ -43,15 +45,40 @@ class View extends Component
     public function update($id)
     {
         try {
+            $userPoints = $this->user['points'];
             $status = true;
+
             if(isset($this->post['isApproved']) && $this->post['isApproved']){
                 $status = false;
             }
 
+            if($status){
+                $userPoints += $this->post['count'];
+            }
+
             $database = \App\Services\FirebaseService::connect();
+
             $user = $database->collection('posts')->document($this->slug)->set(['isApproved' => $status], ['merge' => true]);
+            $user = $database->collection('users')->document($this->post['userId'])->set(['points' => $userPoints], ['merge' => true]);
 
             if($user){
+
+                if($status){
+                    try {
+
+                        $fcm = \App\Services\FirebaseService::connectFCM();
+
+                        $message = CloudMessage::withTarget('token', $this->user['deviceToken'])
+                                        ->withNotification(Notification::create('Post approved', 'You post is approved ,You got '.$this->post['count'].' points'));
+
+                        // Send the message
+                        $fcm->send($message);
+
+                    } catch (\Throwable $th) {
+
+                    }
+                }
+
                 $post = $database->collection('posts')->document($this->slug)->snapshot()->data();
                 $this->post = $post;
                 $this->confirming = 0;

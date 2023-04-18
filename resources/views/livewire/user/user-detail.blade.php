@@ -39,10 +39,15 @@
                                 Block
                                 </button>
                             @endif
-
                         @else
+
+                        <div wire:loading.remove wire:target="update">
                             <button wire:click="update(1)"
-                                class="bg-red-600 text-white w-40 px-4 py-1 hover:bg-red-600 rounded border">are you sure ?</button>
+                            class="bg-red-600 text-white w-40 px-4 py-1 hover:bg-red-600 rounded border">are you sure ?</button>
+                        </div>
+                        <div wire:loading wire:target="update">
+                            <x-spinner></x-spinner>
+                        </div>
                         @endif
                     </div>
                 </div>
