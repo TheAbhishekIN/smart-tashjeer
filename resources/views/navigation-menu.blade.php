@@ -5,8 +5,9 @@
             <div class="flex">
                 <!-- Logo -->
                 <div class="shrink-0 flex items-center">
-                    <a href="{{ route('dashboard') }}">
-                        <x-application-mark class="block h-9 w-auto" />
+                    <a href="{{ route('dashboard') }}" class="m-4">
+                        {{-- <x-application-mark class="block h-9 w-auto" /> --}}
+                        <img src="{{asset('assets/logo.png')}}" class="block p-2 h-20 w-auto" alt="">
                     </a>
                 </div>
 
@@ -27,14 +28,6 @@
                     <x-nav-link href="{{ route('news.index') }}" :active="request()->routeIs('news.*')">
                         {{ __('News') }}
                     </x-nav-link>
-                    {{--
-                    <x-nav-link href="{{ route('pages.index') }}" :active="request()->routeIs('pages.index')">
-                        {{ __('News') }}
-                    </x-nav-link>
-
-                    <x-nav-link href="{{ route('pages.index') }}" :active="request()->routeIs('pages.index')">
-                        {{ __('Notifications') }}
-                    </x-nav-link> --}}
                 </div>
             </div>
 
@@ -174,12 +167,6 @@
             <x-responsive-nav-link href="{{ route('news.index') }}" :active="request()->routeIs('news.*')">
                 {{ __('News') }}
             </x-responsive-nav-link>
-
-            {{--
-
-            <x-responsive-nav-link href="{{ route('pages.index') }}" :active="request()->routeIs('pages.index')">
-                {{ __('Notifications') }}
-            </x-responsive-nav-link> --}}
         </div>
 
         <!-- Responsive Settings Options -->
