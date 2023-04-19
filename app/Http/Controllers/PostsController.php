@@ -25,6 +25,7 @@ class PostsController extends Controller
                 $user = $this->database->collection('users')->document($post->data()['userId'])->snapshot()->data();
                 $data[$key]['user']['name'] = $user['name'];
                 $data[$key]['user']['image'] = $user['image'];
+                $data[$key]['user']['username'] = $user['userName'];
             }
 
         } catch (\Throwable $th) {

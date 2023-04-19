@@ -39,8 +39,8 @@
             @forelse($data as $post)
             <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
                 <td class="w-32 p-4 font-semibold">
-                    <img class="w-10 h-10 rounded-full" src="{{$post['user']['image']}}" alt="{{$post['user']['name']}}">
-                    {{$post['user']['name']}}
+                    <img class="w-10 h-10 rounded-full" src="{{$post['user']['image']}}" alt="{{$post['user']['username']}}">
+                    {{$post['user']['username']}}
                 </td>
                 <td class="px-6 py-4 font-semibold text-gray-900 dark:text-white">
                     {{$post['plantName']}}
