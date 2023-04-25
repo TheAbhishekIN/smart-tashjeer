@@ -2,7 +2,7 @@
     <x-slot name="header" >
         <div class="flex justify-between">
             <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-                {{ __('Posts') }}
+                {{ __('Contributions') }}
             </h2>
         </div>
 
@@ -10,6 +10,25 @@
 
     <div class="py-12">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
+            <div class="flex m-4 justify-normal">
+
+                @if(!request()->has('verified') && !request()->has('unverified'))
+                <x-link-success-button href="{{route('posts.index')}}">All</x-link-success-button>
+                @else
+                <x-link-simple-button href="{{route('posts.index')}}">All</x-link-simple-button>
+                @endif
+                @if(request()->has('verified'))
+                    <x-link-success-button href="{{route('posts.index')}}?verified=true">Verified</x-link-success-button>
+                @else
+                    <x-link-simple-button href="{{route('posts.index')}}?verified=true">Verified</x-link-simple-button>
+                @endif
+
+                @if(request()->has('unverified'))
+                    <x-link-success-button href="{{route('posts.index')}}?unverified=true">Unverified</x-link-success-button>
+                @else
+                    <x-link-simple-button href="{{route('posts.index')}}?unverified=true">Unverified</x-link-simple-button>
+                @endif
+            </div>
             <div class="bg-white overflow-hidden shadow-xl sm:rounded-lg">
 
 <div class="relative overflow-x-auto">
@@ -31,6 +50,9 @@
                     AI Count
                 </th>
                 <th scope="col" class="px-6 py-3">
+                    Status
+                </th>
+                <th scope="col" class="px-6 py-3">
                     Action
                 </th>
             </tr>
@@ -50,6 +72,13 @@
                 </td>
                 <td class="px-6 py-4 font-semibold text-gray-900 dark:text-white">
                     {{$post['aiCount']}}
+                </td>
+                <td class="px-6 py-4 font-semibold text-gray-900 dark:text-white">
+                    @if(isset($post['isApproved']) && $post['isApproved'])
+                        <span class="bg-green-700 p-2 rounded text-white">Verified</span>
+                    @else
+                        <span class="bg-red-700 p-2 rounded text-white">Unverified</span>
+                    @endif
                 </td>
                 <td class="px-6 py-4">
                     <x-link-button href="{{route('posts.view', $post['id'])}}"> View</x-link-button>

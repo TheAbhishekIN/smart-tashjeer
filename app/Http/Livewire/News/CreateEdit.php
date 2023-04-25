@@ -3,6 +3,8 @@
 namespace App\Http\Livewire\News;
 
 use Livewire\Component;
+use Kreait\Firebase\Messaging\CloudMessage;
+use Kreait\Firebase\Messaging\Notification;
 use Str;
 class CreateEdit extends Component
 {
@@ -55,6 +57,33 @@ class CreateEdit extends Component
                 if($save){ session()->flash('success', 'News successfully updated.'); }
             } else {
                 $save = $database->collection('news')->document($slug)->set($pageData);
+
+                try {
+                    $users = $database->collection('users')->documents();
+
+                    foreach($users as $u){
+                        $fcm = \App\Services\FirebaseService::connectFCM();
+                        try {
+                            if(isset($u->data()['deviceToken'])){
+                                $message = CloudMessage::withTarget('token', $u->data()['deviceToken'])
+                                        ->withNotification(Notification::create('News update', $this->title));
+
+                                // Send the message
+                                $fcm->send($message);
+                            }
+
+                        } catch (\Throwable $th) {
+                            //throw $th;
+                        }
+
+                    }
+
+
+                } catch (\Throwable $th) {
+
+                }
+
+
                 if($save){ session()->flash('success', 'News successfully saved.'); }
             }
         } catch (\Throwable $th) {

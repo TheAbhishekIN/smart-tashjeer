@@ -13,19 +13,52 @@ class PostsController extends Controller
         $this->database = \App\Services\FirebaseService::connect();
     }
 
-    public function index()
+    public function index(Request $request)
     {
+
         $data = array();
         try {
             $posts = $this->database->collection('posts')->documents();
 
             foreach($posts as $key => $post){
-                $data[$key] = $post->data();
-                $data[$key]['id'] = $post->id();
-                $user = $this->database->collection('users')->document($post->data()['userId'])->snapshot()->data();
-                $data[$key]['user']['name'] = $user['name'];
-                $data[$key]['user']['image'] = $user['image'];
-                $data[$key]['user']['username'] = $user['userName'];
+                if($request->has('verified') && isset($post->data()['isApproved']) && $post->data()['isApproved']){
+                    $data[$key] = $post->data();
+                    $data[$key]['id'] = $post->id();
+                    $user = $this->database->collection('users')->document($post->data()['userId'])->snapshot()->data();
+                    $data[$key]['user']['name'] = $user['name'];
+                    $data[$key]['user']['image'] = $user['image'];
+                    $data[$key]['user']['username'] = $user['userName'];
+                }
+
+                if($request->has('unverified')){
+                    if(isset($post->data()['isApproved']) && !$post->data()['isApproved']){
+                        $data[$key] = $post->data();
+                        $data[$key]['id'] = $post->id();
+                        $user = $this->database->collection('users')->document($post->data()['userId'])->snapshot()->data();
+                        $data[$key]['user']['name'] = $user['name'];
+                        $data[$key]['user']['image'] = $user['image'];
+                        $data[$key]['user']['username'] = $user['userName'];
+                    }
+
+                    if(!isset($post->data()['isApproved'])){
+                        $data[$key] = $post->data();
+                        $data[$key]['id'] = $post->id();
+                        $user = $this->database->collection('users')->document($post->data()['userId'])->snapshot()->data();
+                        $data[$key]['user']['name'] = $user['name'];
+                        $data[$key]['user']['image'] = $user['image'];
+                        $data[$key]['user']['username'] = $user['userName'];
+                    }
+
+                }
+
+                if(!$request->has('verified') && !$request->has('unverified')){
+                        $data[$key] = $post->data();
+                        $data[$key]['id'] = $post->id();
+                        $user = $this->database->collection('users')->document($post->data()['userId'])->snapshot()->data();
+                        $data[$key]['user']['name'] = $user['name'];
+                        $data[$key]['user']['image'] = $user['image'];
+                        $data[$key]['user']['username'] = $user['userName'];
+                }
             }
 
         } catch (\Throwable $th) {
